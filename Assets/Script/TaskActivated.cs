@@ -7,7 +7,7 @@ public class TaskActivated : MonoBehaviour
     [SerializeField]
     private Camera _camera;
 
-    [Header("GameObject holding the Minigame")]
+    [Header("Prefab GameObject holds the Minigame")]
     [SerializeField]
     private GameObject _minigame;
 
@@ -38,6 +38,8 @@ public class TaskActivated : MonoBehaviour
                 if(hit.collider.gameObject == gameObject)
                 {
                     _minigame.SetActive(true);
+                    //TODO ^ delete this and add
+                    //instatiate the minigame
                     gameObject.SetActive(false);
                 }
             }
