@@ -4,28 +4,20 @@ using UnityEngine;
 
 public class TaskActivated : MonoBehaviour
 {
-    [SerializeField]
     private Camera _camera;
-
-    [Header("Prefab GameObject holds the Minigame")]
-    [SerializeField]
     private GameObject _minigame;
 
     /*
     not sure how the order works but imma put the minigame in awake
     so the excalimation can be in start when they get deactivated
     */
-
-    void Awake()
-    {
-        _minigame.SetActive(false);
-    }
-
+    //Scratch that i made it a prefab
     void Start()
     {
-        gameObject.SetActive(false);
+        //get the minigame from the resources folder with the name of the parent
+        _minigame = Resources.Load<GameObject>("Prefab/"+gameObject.transform.parent.name);
+        _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
-
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -37,10 +29,12 @@ public class TaskActivated : MonoBehaviour
             {
                 if(hit.collider.gameObject == gameObject)
                 {
-                    _minigame.SetActive(true);
+                    Destroy(gameObject);
+                    //_minigame.SetActive(true);
                     //TODO ^ delete this and add
                     //instatiate the minigame
-                    gameObject.SetActive(false);
+                    GameObject _canvas = Instantiate(_minigame, transform.parent.position + new Vector3(0, 6, 0), transform.parent.rotation, transform.parent);
+                    _canvas.GetComponentInChildren<Canvas>().worldCamera = _camera;
                 }
             }
         }

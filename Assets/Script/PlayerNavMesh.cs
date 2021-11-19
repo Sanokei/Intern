@@ -13,9 +13,6 @@ public class PlayerNavMesh : MonoBehaviour
     [SerializeField]
     private GameObject[] _tasks;
 
-     [SerializeField]
-    private GameObject[] _minigames;
-
     RaycastHit hit;
     Ray ray;
 
@@ -25,11 +22,22 @@ public class PlayerNavMesh : MonoBehaviour
     }
     void Update()
     {
+        int ChildCount = 0;
         for(int index = 0; index < _tasks.Length; index++)
         {
-           if (!_tasks[index].activeSelf && !_minigames[index].activeSelf){
+           //checks if _tasks[index] has instantiated the exclimation prefab or not
+            if (_tasks[index].transform.childCount == 0)
+            {
                 StartCoroutine(MoveToTask(_tasks[index]));
-           }
+            }
+            else
+            {
+                ChildCount++;
+            }
+        }
+        if( ChildCount == 0)
+        {
+            randomizeTasks();
         }
     }
 
@@ -48,11 +56,8 @@ public class PlayerNavMesh : MonoBehaviour
         {
             int randomIndex = Random.Range(i, _tasks.Length);
             GameObject temp_task = _tasks[randomIndex];
-            GameObject temp_mini = _minigames[randomIndex];
             _tasks[randomIndex] = _tasks[i];
             _tasks[i] = temp_task;
-            _minigames[randomIndex] = _minigames[i];
-            _minigames[i] = temp_mini;
         }
     }   
 }

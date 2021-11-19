@@ -6,14 +6,20 @@ public class ActivateTask : MonoBehaviour
 {
     [SerializeField]
     private GameObject _exclamation;
+    private bool _inBounds = false;
 
-    [SerializeField]
-    private GameObject _minigame;
-
+    void Update()
+    {
+        if(_inBounds && transform.childCount == 0){
+            Instantiate(_exclamation, transform.position + new Vector3(0, 1, 0), Quaternion.identity, transform);
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
-        //checking if the exclamation is active is redundant
-        if(!_minigame.activeSelf && !_exclamation.activeSelf)
-            _exclamation.SetActive(true);
+        _inBounds = true;
+    }
+    void OnTriggerExit(Collider other)
+    {
+        _inBounds = false;
     }
 }
