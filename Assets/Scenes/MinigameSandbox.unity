@@ -224,7 +224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9138865900776186060, guid: 729f149fa0f83f946829c2f8dd9b2c85, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 729f149fa0f83f946829c2f8dd9b2c85, type: 3}
@@ -510,6 +510,10 @@ PrefabInstance:
     - target: {fileID: 8603662074192752190, guid: 40ae6d9075fc7164ea48fc6a448645a8, type: 3}
       propertyPath: m_Name
       value: Bosses Computer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603662074192752190, guid: 40ae6d9075fc7164ea48fc6a448645a8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8603662074192752191, guid: 40ae6d9075fc7164ea48fc6a448645a8, type: 3}
       propertyPath: m_RootOrder

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TaskActivated : MonoBehaviour
 {
-    private Camera _camera;
+    public Camera _camera;
     private GameObject _minigame;
 
     /*
@@ -16,7 +16,7 @@ public class TaskActivated : MonoBehaviour
     {
         //get the minigame from the resources folder with the name of the parent
         _minigame = Resources.Load<GameObject>("Prefab/"+gameObject.transform.parent.name);
-        _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        //_camera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
     void Update()
     {
