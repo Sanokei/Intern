@@ -18,12 +18,13 @@ public class FaxOrTrash : MonoBehaviour, IDragHandler, IEndDragHandler
     private RectTransform _canvasRectTransform;
     private RectTransform _faxRectTransform;
     private RectTransform _trashRectTransform;
+    
     void Start()
     {
+        _faxRectTransform = GameObject.Find("Fax").GetComponent<RectTransform>();
+        _trashRectTransform = GameObject.Find("Shredder").GetComponent<RectTransform>();
         _Canvas = GetComponentInParent<Canvas>();
         _canvasRectTransform = _Canvas.GetComponent<RectTransform>();
-        _faxRectTransform = _Canvas.transform.Find("Screen/Game/Graphics/Fax").GetComponent<RectTransform>();
-        _trashRectTransform = _Canvas.transform.Find("Screen/Game/Graphics/Shredder").GetComponent<RectTransform>();
     }
     public void OnDrag(PointerEventData data)
     {
@@ -38,26 +39,34 @@ public class FaxOrTrash : MonoBehaviour, IDragHandler, IEndDragHandler
         }
     }
 
-    public void OnEndDrag(PointerEventData data)
+    public void OnEndDrag(PointerEventData data) 
     {
-        //check which image it is on
-        if(_imageRectTransform.rect.Overlaps(_faxRectTransform.rect) && _imageRectTransform.rect.Overlaps(_trashRectTransform.rect))
+        
+        if(RectTransformUtility.RectangleContainsScreenPoint(_faxRectTransform, data.position, _Canvas.worldCamera))
         {
-            Destroy(_image.gameObject);
-            FaxOrTrash_MinigameLoop.Instance._isJunkActive = false;
-            if(_image.sprite.name == "toFax"){
-                //correct
+            if(_image.sprite.name == "toFax")
+            {
                 FaxOrTrash_MinigameLoop.Instance.AddScore();
             }
+            else
+            {
+                
+            }
+            FaxOrTrash_MinigameLoop.Instance._isJunkActive = false;
+            Destroy(_image);
         }
-        if(_imageRectTransform.rect.Overlaps(_trashRectTransform.rect) && !_imageRectTransform.rect.Overlaps(_faxRectTransform.rect) )
+        else if(RectTransformUtility.RectangleContainsScreenPoint(_trashRectTransform, data.position, _Canvas.worldCamera))
         {
-            Destroy(_image.gameObject);
-            FaxOrTrash_MinigameLoop.Instance._isJunkActive = false;
-            if(_image.sprite.name == "toJunk"){
-                //correct
+            if(_image.sprite.name == "toJunk")
+            {
                 FaxOrTrash_MinigameLoop.Instance.AddScore();
             }
+            else
+            {
+                
+            }
+            FaxOrTrash_MinigameLoop.Instance._isJunkActive = false;
+            Destroy(_image);
         }
     }
 

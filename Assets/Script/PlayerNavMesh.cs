@@ -13,63 +13,23 @@ public class PlayerNavMesh : MonoBehaviour
     [SerializeField]
     private GameObject[] _tasks;
 
-    RaycastHit hit;
-    Ray ray;
-
-    void Start()
+    //go to a random task location
+    public void GoToRandomTask()
     {
-        randomizeTasks();
-    }
-    void Update()
-    {
-        int ChildCount = 0;
-        for(int index = 0; index < _tasks.Length; index++)
-        {
-           //checks if _tasks[index] has instantiated the exclimation prefab or not
-            if (_tasks[index].transform.childCount == 0)
-            {
-                StartCoroutine(MoveToTask(_tasks[index]));
-            }
-            else
-            {
-                ChildCount++;
-            }
+        int randomTaskIndex;
+        do{
+            randomTaskIndex = Random.Range(0, _tasks.Length);
         }
-        if( ChildCount == 0)
-        {
-            randomizeTasks();
-        }
+        while(_tasks[randomTaskIndex].transform.childCount != 0);
+        _navMeshAgent.SetDestination(_tasks[randomTaskIndex].transform.position);
     }
 
-    IEnumerator MoveToTask(GameObject task)
+    //call GoToRandomTask() when the navMeshAgent has no other destination
+    private void Update()
     {
-        _navMeshAgent.SetDestination(task.transform.position);
-        while (_navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance)
+        if (_navMeshAgent.remainingDistance < 0.01f)
         {
-            yield return null;
+            GoToRandomTask();
         }
     }
-
-    void randomizeTasks()
-    {
-        for (int i = 0; i < _tasks.Length; i++)
-        {
-            int randomIndex = Random.Range(i, _tasks.Length);
-            GameObject temp_task = _tasks[randomIndex];
-            _tasks[randomIndex] = _tasks[i];
-            _tasks[i] = temp_task;
-        }
-    }   
 }
-
-/*
-// for testing
-if (Input.GetMouseButtonDown(0))
-        {
-            ray = _camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                _navMeshAgent.SetDestination(hit.point);
-            }
-        }
-*/
