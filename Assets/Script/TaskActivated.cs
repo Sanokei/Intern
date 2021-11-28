@@ -20,6 +20,7 @@ public class TaskActivated : MonoBehaviour
     }
     void Update()
     {
+        CracksManager.Instance._cracksCounter++;
         if (Input.GetMouseButtonDown(0))
         {
             //checks for if the mouse is in the collider
