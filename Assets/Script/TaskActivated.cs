@@ -20,9 +20,11 @@ public class TaskActivated : MonoBehaviour
     }
     void Update()
     {
-        CracksManager.Instance._cracksCounter++;
         if (Input.GetMouseButtonDown(0))
         {
+
+            /* Should've made this an event */
+
             //checks for if the mouse is in the collider
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
